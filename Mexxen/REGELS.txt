@@ -1,0 +1,44 @@
+Regels:
+
+1. het hoogste getal staat altijd voorop
+// getallen moeten als string bij elkaar worden opgeteld
+// door '==' operators te gebruiken kan ik rekenen met strings
+// ik kan een string maken door de values te concatineren met "" + x + "";
+// if 1+2 moet dus altijd 21 worden
+// kijken of ik een if kan maken waarmee ik de hoogste voorop zet.
+
+
+2. zelfde getal is altijd het getal in 100 tallen
+
+
+3. getal 21 is altijd +1 slok in de pot
+
+
+// Gevorderd
+
+4. een speler moet 3 keer gooien
+
+
+5. als een speler een 1 of een 2 gooit, mag hij een steen laten liggen
+
+
+
+
+Ik moet de nummers als string hebben
+als een nummer, bijv, 3 en 4 wordt gegooid moet ik 43 hebben
+dat betekent vgm: dat 43 en 34 hetzelfde is.
+
+
+
+// players:
+om player te switchen heb ik waarsschijnlijk ook state vars nodig.
+
+
+// game over
+count clicks on switchPlayer
+    after clicks >= players 
+    state var, gamePlay is false 
+
+
+
+
