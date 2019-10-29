@@ -34,24 +34,117 @@
 
 // maria.isElder();
 
-// Primitives vs Objects
 
-var personProto = {
-    calculateAge: function() {
-        console.log(2016 - this.yearOfBirth);      
+// var personProto = {
+//     calculateAge: function() {
+//         console.log(2016 - this.yearOfBirth);      
+//     }
+// }
+
+
+// var monique = Object.create(personProto, {
+//     name: { value: 'Monique'},
+//     zipCode: { value: '6060QQ' },
+//     lastName: { value: 'Fetcher' }
+// })
+
+// var marcel = Object.create(personProto);
+// marcel.name = 'Marcel';
+// marcel.zipCode = '5050ZZ';
+// marcel.lastName = 'Spencer';
+
+
+// //  Primitives and Objects
+// var a = marcel.lastName;
+
+// var a = "master";
+
+// // var a = marcel;
+// marcel.lastName = 'Fish';
+
+// console.log(a);
+
+
+var years = [1990, 1998, 1956, 2005, 1990];
+
+function arrayCalc(arr, fn) {
+    var arrRes = [];
+    for (var i = 0; i < arr.length; i++) 
+    {
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+
+function calculateAge(el) {
+    return 2016 - el;
+}
+
+function isFullAge(el) {
+    return el >= 18;
+}
+
+function maxHeartRate(el) {
+    if (el >= 18 && el <= 81)  {
+        return Math.round(206.9 - (0.67 * el));
+    } else {
+         return - 1;       
     }
 }
 
-var number = 'apenkut';
+var ages = arrayCalc(years, calculateAge);
+var fullAges = arrayCalc(ages, isFullAge);
 
-var monique = Object.create(personProto, {
-    name: { value: 'Monique'},
-    zipCode: { value: '6060QQ' },
-    lastName: { value: 'Fetcher' }
-})
+var maxHeart = arrayCalc(ages, maxHeartRate);
 
-var marcel = Object.create(personProto);
-marcel.name = 'Marcel';
-marcel.zipCode = '5050ZZ';
-marcel.lastName = 'Spencer';
+console.log(ages);
+console.log(fullAges);
+console.log(maxHeart);
 
+
+function interviewQuestion(job) {
+    if (job === 'designer') {
+        return function(name) {
+            console.log(name + ', can you explain what UX means');
+        }
+     } else if (job === 'teacher') {
+            return function(name) {
+                console.log('What subject do you teach, ' + name);
+            }          
+        } else {
+            return function(name) {
+                console.log('Hello ' + name + ', what do you do?');  
+            }
+        }
+    }
+ 
+ var teacherQuestion = interviewQuestion('teacher');
+ teacherQuestion('John');
+
+ interviewQuestion('designer')('Brenda');
+
+//   TRY SELF SECTION
+var billPrice = 15;
+
+(function chooseCourses(courseAmount) {
+    if(courseAmount === 'one') {
+        return function(personsAmount)  {
+            billPrice * personsAmount;
+            console.log('The bill will at least be ' + billPrice);
+        }
+    } else if (courseAmount === 'two') {
+        return function(personsAmount) {
+            billPrice += (5 * personsAmount);
+            console.log('The bill will at least be ' + billPrice);
+            
+        }
+    } else if (courseAmount === ' three') {
+        return function(personsAmount) {
+            billPrice += (10 * personsAmount)
+            console.log('The bill will at least be ' + billPrice);
+
+        }
+    } else {
+        console.log('We only have three courses'); 
+    }
+})('two')(2);
