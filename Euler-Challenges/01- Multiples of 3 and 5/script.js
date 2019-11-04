@@ -1,26 +1,45 @@
 var n;
 var totalNumber;
 var variableNumber;
+var multiples= [];
+var sumOfMultiples = 0;
 
-function divideNumber(totalNumber, variableNumber) {
-    n = Math.floor(totalNumber / variableNumber);
+function getMultiples(variableNumber) {
+    n = Math.floor(9 / variableNumber);
     console.log("n: " + n);  
     return n;
 }
 
-function getSum(x){
-    var sum = 0;
+function putInArray(x){
+    var result = 0;
     for (i = 0; i < n; i++) {
-        sum += x;
-        console.log(sum); 
+        result += x;
+        multiples.push(result);
     }
 }
 
-var three = divideNumber(9, 3);
 
-var sum = getSum(3);
+function getSumOfMultiples() {
+    for (i = 0; i < multiples.length; i++) {  
 
-console.log(sumThree);
+        singleValue = multiples[i];
+        sumOfMultiples += singleValue;
+    }
+    console.log(sumOfMultiples);
+
+}
+
+
+
+getMultiples(3);
+
+putInArray(3);
+
+
+console.log(multiples);
+
+getSumOfMultiples();
+
 
 // console.log(three + five);
 
@@ -31,11 +50,10 @@ console.log(sumThree);
 
 
 // get the multiples below 10 from 5 or 3
-var five = Math.floor(9 / 5);
-var three = Math.floor(9 / 3);
+// var five = Math.floor(9 / 5);
+// var three = Math.floor(9 / 3);
 
 // put these in an array
-for ()
 
 
 // sum up the array
