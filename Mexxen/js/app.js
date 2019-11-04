@@ -67,5 +67,8 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 })
 
 
+// Math.max max waarde van 2 getallen
+
+
 
 

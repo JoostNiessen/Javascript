@@ -263,6 +263,9 @@ for (i = 0; i < penguins.length; i++) {
     }
 }
 
+console.log(penguins);
+
+
 
 
 

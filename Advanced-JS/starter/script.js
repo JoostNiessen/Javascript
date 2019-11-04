@@ -147,4 +147,6 @@ var billPrice = 15;
     } else {
         console.log('We only have three courses'); 
     }
-})('two')(2);
+})
+
+chooseCourses('two')(2);
