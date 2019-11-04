@@ -263,7 +263,35 @@ for (i = 0; i < penguins.length; i++) {
     }
 }
 
+
+for (i = 0; i < penguins.length; i++) {
+    penguins[i].age = 12;    
+}
+
 console.log(penguins);
+
+var slim = {
+    name: "edalco"
+}
+
+function Penguin(name, origin, canFly, numberOfFeet) {
+    this.name = name;
+    this.origin = origin;
+    this.canFly = canFly;
+    this.numberOfFeet = numberOfFeet;
+}
+
+Penguin.prototype.age = 12;
+
+Penguin.prototype.sayAge = function() {
+    console.log("I am " + this.age + " years old.");
+}
+
+var frits = new Penguin("frits", "the chronicles of Narnia", false, 2);
+
+console.log(frits.sayAge());
+
+
 
 
 
