@@ -47,5 +47,54 @@ var book4 = new Book('The Old Man and the Sea', 'Dick Trom', false);
 var bookArray = [book1, book2, book3, book4];
 
 for (i = 0; i < bookArray.length; i++) {
-    console.log(bookArray[i].title + ', written by; ' + bookArray[i].author);  
+    // console.log(bookArray[i].title + ', written by; ' + bookArray[i].author);  
+
+    if (bookArray[i].alreadyRead == true) {
+        console.log('You already read: ' + bookArray[i].title + ' by: ' + bookArray[i].author);
+    } else {
+        console.log('You still have to read: ' + bookArray[i].title + ' by: ' + bookArray[i].author);
+    }
 }
+
+/***** RECONSTRUCTION OF THE GIVEN SOLUTION */
+
+var books = [
+    { 
+        title: 'Harry Potter: Philosopher Stone',
+        author: 'JK Rowling',
+        alreadyRead: true
+    },
+    {
+        title: 'De Bokkerijders',
+        author: 'JTon van Reen',
+        alreadyRead: true
+    },
+    {
+        title: '50 Shades of Grey',
+        author: 'Kluun',
+        alreadyRead: false
+    },
+    {
+        title: 'The old Man and the Sea',
+        author: 'Dick Trom',
+        alreadyRead: false
+    }
+];
+
+for (i = 0; i < books.length; i++) {
+    var book = books[i];
+    var bookInfo = book.title + ', written by: ' + book.author;
+
+    if (book.alreadyRead == true) {
+        console.log('You have already read ' + bookInfo);
+        
+    } else {
+        console.log('Not read yet: ' + bookInfo);
+    }
+}
+
+
+
+
+
+
