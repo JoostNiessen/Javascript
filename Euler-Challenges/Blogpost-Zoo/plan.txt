@@ -1,0 +1,16 @@
+//create input fields of: title, undertitle, text.
+
+//create submit button
+
+//get values of fields
+
+//add to buttonClick
+
+maak leeg Prototype met properties
+
+zet de values in de properties
+
+
+make new json object with values
+
+loop over objects and place in container
