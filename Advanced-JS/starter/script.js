@@ -126,6 +126,35 @@ function interviewQuestion(job) {
 //   TRY SELF SECTION
 var billPrice = 15;
 
+function chooseCourses(courseAmount) {
+    if(courseAmount === 'one') {
+        return function(personsAmount)  {
+            billPrice * personsAmount;
+            console.log('The bill will at least be ' + billPrice);
+        }
+    } else if (courseAmount === 'two') {
+        return function(personsAmount) {
+            billPrice += (5 * personsAmount);
+            console.log('The bill will at least be ' + billPrice);
+            
+        }
+    } else if (courseAmount === ' three') {
+        return function(personsAmount) {
+            billPrice += (10 * personsAmount)
+            console.log('The bill will at least be ' + billPrice);
+
+        }
+    } else {
+        console.log('We only have three courses'); 
+    }
+}
+
+chooseCourses('two')(2);
+
+/***
+ * IIFE, Self invoking funciton expression
+ */
+
 (function chooseCourses(courseAmount) {
     if(courseAmount === 'one') {
         return function(personsAmount)  {
@@ -147,6 +176,64 @@ var billPrice = 15;
     } else {
         console.log('We only have three courses'); 
     }
-})
+})('two')(8);
 
-chooseCourses('two')(2);
+
+
+/*************************************
+ * CLOSURES
+ */
+
+function retirement(retirementAge) {
+    var a = ' years left until retirement.'
+    return function(yearOfBirth) {
+        var age = 2016 - yearOfBirth;
+        console.log((retirementAge - age) + a);
+        
+    }
+}
+
+var retirementUS = retirement(66);
+retirementUS(1990);
+
+
+/***************************
+ * MINI CODING CHALLENGE
+ * use a previous code block to write a closure
+ */
+
+function interviewQuestion(job) {
+    return function(name) {
+        if (job === 'designer') {
+            console.log(name + ', can you explain what UX means');
+        } else if (job === 'teacher') {
+            console.log('What subject do you teach, ' + name);
+        } else {
+            console.log('Hello ' + name + ', what do you do?');  
+        }
+    }
+}
+
+
+ 
+
+function interviewQuestion(job) {
+    if (job === 'designer') {
+        return function(name) {
+            console.log(name + ', can you explain what UX means');
+                }
+    } else if (job === 'teacher') {
+        return function(name) {
+                console.log('What subject do you teach, ' + name);
+                }          
+    } else {
+        return function(name) {
+                console.log('Hello ' + name + ', what do you do?');  
+                }
+    }
+}
+ 
+ var teacherQuestion = interviewQuestion('teacher');
+ teacherQuestion('John');
+
+ interviewQuestion('designer')('Brenda');
