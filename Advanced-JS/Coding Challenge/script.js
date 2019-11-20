@@ -1,48 +1,38 @@
-function Question(questionNumber, question, possibleAnswer, correctAnswer) {
-    this.questionNumber = questionNumber;
+
+
+function Question(question, answers, correct) {
     this.question = question;
-    this.possibleAnswer = possibleAnswer;
-    this.correctAnswer = correctAnswer;
+    this.answers = answers;
+    this.correct = correct;
 }
 
-var correctAnswer;
-var question;
-var questionNumber;
+var question1 = new Question('What is the sum of 5 + 5?', [10, 12, 2], 0);
+var question2 = new Question('What is the sun made of?', ['water', 'fire', 'air'], 1);
+var question3 = new Question('What do fishermen fish?', ['cats', 'dogs', 'fish'], 2);
 
+var questions = [question1, question2, question3];
 
-// generate the questions through the function with the answers in the ()
-// 
+Question.prototype.displayQuestion = function() {
+    console.log(this.question);
 
-var question1 = new Question(1, 'What is the sum of 5 + 5?', [10, 12, 2], 0);
-var question2 = new Question(2, 'What is the sun made of?', ['water', 'fire', 'air'], 1);
-var question3 = new Question(3, 'What do fishermen fish?', ['cats', 'dogs', 'fish'], 2);
-
-var questionArray = [question1, question2, question3];
-
-// create seperate questions which you can log with the number
-// get one random question
-
-
-for (i = 0; i < questionArray.length; i++) {
-    question = questionArray[i];
-    questionNumber = question.questionNumber;
-}
-console.log(question);
-
-
-var iRnd = Math.floor(Math.random() * 3 + 1);
-
-
-if (questionNumber === iRnd) {
-    console.log(question.question);
+    for (i = 0; i < this.answers.length; i++) {
+        console.log(i + ' : ' + this.answers[i]);
+    }
 }
 
 
+var n  = Math.floor(Math.random() * questions.length);
 
+questions[n].displayQuestion();
 
+Question.prototype.correctAnswer = function(ans) {
+    if(ans === this.correct) {
+        console.log("Correct answer!!!");
+    } else {
+        console.log("Wrong answer...");
+    }
+}
 
+var answer = parseInt(prompt("Please select the right answer!"));
 
-
-
-
-
+questions[n].correctAnswer(answer);
