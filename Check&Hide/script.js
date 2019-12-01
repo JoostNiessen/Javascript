@@ -1,7 +1,7 @@
 var taskList = [];
 
 document.getElementById('addBtn').addEventListener('click', function() {
-    var task = document.getElementById('addTask').value;
+    var task = document.getElementById('taskInput').value;
 
     taskList.push(task);
     console.log(taskList);
@@ -9,10 +9,25 @@ document.getElementById('addBtn').addEventListener('click', function() {
     for (i = 0; i < taskList.length; i++) {
         task = taskList[i]
     }
-    addItemToList(task);      
+    addItemToList(task);    
+    
+    document.getElementById('taskInput').value = '';
     
 });
 
+
+// document.getElementById('checkBtn').addEventListener('click', function() {
+//     var task = document.getElementById('taskInput').value;
+
+//     taskList.push(task);
+//     console.log(taskList);
+
+//     for (i = 0; i < taskList.length; i++) {
+//         task = taskList[i]
+//     }
+//     addItemToList(task);      
+    
+// });
 
 
 
