@@ -1,13 +1,29 @@
-var taskList = [];
+var taskList1 = {
+    tasks: [],
+    listName: 'Monday'
+}
+var task = {
+    name: '',
+    priority: 0
+};
+
+// taskList1.tasks.push(task); 
+
+// task.name = 'freddy';
+// task.priority = 9;
+
+
+document.querySelector('.header').textContent = taskList1.listName;
+
 
 document.getElementById('addBtn').addEventListener('click', function() {
     var task = document.getElementById('taskInput').value;
 
-    taskList.push(task);
-    console.log(taskList);
+    taskList1.tasks.push(task);
+    console.log(taskList1.tasks);
 
-    for (i = 0; i < taskList.length; i++) {
-        task = taskList[i]
+    for (i = 0; i < taskList1.tasks.length; i++) {
+        task = taskList1.tasks[i]
     }
     addItemToList(task);    
     
@@ -16,18 +32,27 @@ document.getElementById('addBtn').addEventListener('click', function() {
 });
 
 
-// document.getElementById('checkBtn').addEventListener('click', function() {
-//     var task = document.getElementById('taskInput').value;
 
-//     taskList.push(task);
-//     console.log(taskList);
+var list = document.querySelector('.list-group');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
 
-//     for (i = 0; i < taskList.length; i++) {
-//         task = taskList[i]
-//     }
-//     addItemToList(task);      
-    
-// });
+
+
+
+function clearList() {
+    // var element = document.querySelector(".list-group-item");
+    // if (element.classList.contains("checked") === true) {
+    //     element.classList.toggle('empty');
+    // }
+
+    for (i = 0; i < taskList1.tasks.length; i++) {
+        task = taskList1.tasks[i]
+    }
+}
 
 
 
@@ -36,8 +61,12 @@ var addItemToList = function(task) {
     node.className = 'list-group-item';                // Create a <li> node
     var textnode = document.createTextNode(task);         // Create a text node
     node.appendChild(textnode);                              // Append the text to <li>
-    document.querySelector(".list1").appendChild(node);     // Append <li> to <ul> with id="myList"
+    document.getElementById("list1").appendChild(node);     // Append <li> to <ul> with id="myList"
 }
+
+
+
+
 
 
 
