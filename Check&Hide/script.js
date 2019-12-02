@@ -1,56 +1,59 @@
-var taskList1 = {
-    tasks: [],
-    listName: 'Monday'
-}
-var task = {
-    name: '',
-    priority: 0
-};
-
-
-
-// first fill list with object tasks, then load all the tasks in the list with a for loop
-
-function getInputValue() {
-    task.name = document.getElementById('taskInput').value;
+var taskList = {
+    tasks: []
 }
 
-function addTaskToArray() {
-    taskList1.tasks.push(task); 
+document.querySelector('.header').textContent = 'Monday';
+
+function getInputValues() {
+    var taskName = document.querySelector('#taskInput').value;
+    return taskName;
 }
 
-function showListInUI() {
-    for (i = 0; i < taskList1.tasks.length; i++) {
-        task = taskList1.tasks[i];
-        
+function addInputValuesToArray(taskName) {
+    taskList.tasks.push(taskName);
+}
+
+function updateUI() {
+
+    for(i = 0; i < taskList.tasks.length; i++) {
+
+        var task = taskList.tasks[i];
+
+        var list = document.createElement("LI"); 
+        list.className = 'list-group-item';                // Create a <li> node
+        var listItem = document.createTextNode(task);         // Create a text node
     }
-    var list = document.createElement("LI"); 
-    list.className = 'list-group-item';                // Create a <li> node
-    var listItem = document.createTextNode(task.name);         // Create a text node
+
     list.appendChild(listItem);                              // Append the text to <li>
     document.getElementById("list1").appendChild(list);
-
 }
-
-
-document.querySelector('.header').textContent = taskList1.listName;
 
 
 document.getElementById('addBtn').addEventListener('click', function() {
-    getInputValue();
-
-    addTaskToArray();
-
-    showListInUI();
-
-
-    addItemToList(task);    
     
-    // set empty input field
-    document.getElementById('taskInput').value = '';
-
-    console.log(taskList1.tasks);
+    addInputValuesToArray(getInputValues());
     
+    updateUI();
+     
+    console.log(taskList);
+
+    document.querySelector('#taskInput').value = '';
+
+    
+    
+});
+
+
+
+document.getElementById('clearList').addEventListener('click', function() {
+    clearArray();
+
+    var ul = document.getElementById("list1");
+    var items = ul.getElementsByTagName("li");
+    for (var i = 0; i < items.length; ++i) {
+        var el = document.querySelector('.list-group-item');
+        el.remove(); // Removes the div with the 'div-02' id
+    }
     
 });
 
@@ -66,17 +69,23 @@ var list = document.querySelector('.list-group');
 
 
 
-function clearList() {
-        taskList1.tasks.pop(task); 
 
-        console.log(taskList1.tasks);
 
+function clearArray() {
+    for(i = 0; i < taskList.tasks.length + 2; i++) {
+        taskList.tasks.pop(); 
+    } 
 }
 
 
 
 var addItemToList = function(task) {
      // Append <li> to <ul> with id="myList"
+     var list = document.createElement("LI"); 
+     list.className = 'list-group-item';                // Create a <li> node
+     var listItem = document.createTextNode(task.name);         // Create a text node
+     list.appendChild(listItem);                              // Append the text to <li>
+     document.getElementById("list1").appendChild(list);
 }
 
 
