@@ -1,0 +1,22 @@
+ul li.checked {
+    background: greenyellow;
+    color: black;
+}
+
+.empty-list {
+    background: red;
+    color: white;
+    width: 30%;
+
+}
+
+ul li.empty {
+    display: none;
+}
+
+.empty-list:hover{
+    background: pink;
+    color: black;
+    width: 30%;
+    
+}

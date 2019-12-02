@@ -13,6 +13,7 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -49,23 +50,21 @@
   
 
   <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <ul class="list-group list1">
-          <li class="list-group-item">Cras justo odio <button type="button" id="checkTask" class="btn btn-danger">-</button></li>
+  <div class="row">
+      <div class="col-md-3">
+        <div class="header m-2 text-center"></div>
+        <ul class="list-group" id="list1">
         </ul>
         <form>
             <div class="form-group text-center d-flex flex-row my-2">
-              <input type="text" class="form-control" id="addTask" placeholder="I need to:">
+              <input type="text" class="form-control" id="taskInput" placeholder="I need to:">
               <button type="button" id="addBtn" class="btn btn-primary addBtn">+</button>
             </div>
           </form>
-      </div>
-
+          <div class="empty-list p-2 text-center mx-auto" onclick="clearList();">CLEAR LIST</div>
+      </div>      
     </div>
-    </div>
-  </div>
+    
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.slim.min.js"></script>
