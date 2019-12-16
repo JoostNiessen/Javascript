@@ -4,6 +4,7 @@ var taskList = {
 
 
 
+
 /***
  * Eventlistener on the + button in the DOM
  * sets the input field to ''
@@ -53,12 +54,15 @@ function clearListElements() {
     var ul = document.getElementById("list1");
     var items = ul.getElementsByTagName("li");
     console.log(items.length);
+
+    
     
     for (var i = 0; i < items.length + 1; ++i) {
         var el = document.querySelector('.checked');
 
         if (el !== null){
             el.remove(); 
+            
         }
     }
 }
@@ -95,7 +99,7 @@ function addInputValuesToArray(taskName) {
  */
 function updateUI() {
     
-    for(i = 0; i < taskList.tasks.length; i++) {
+    for(let i = 0; i < taskList.tasks.length; i++) {
 
         var task = taskList.tasks[i];
 
@@ -113,23 +117,72 @@ function updateUI() {
  * Selects UL, adds eventlistener on target
  * if target is LI toggle .checked, specified in the css
  */
-var list = document.querySelector('.list-group');
+(function targetListelement() {
+    var list = document.querySelector('.list-group');
     list.addEventListener('click', function(ev) {
     if (ev.target.tagName === 'LI') {
-
     ev.target.classList.toggle('checked');
     }
 }, false);
+})();
 
 
 
+/**
+ * Selects list, adds eventlistener to click.
+ * if checked is true, match content with index
+ * use index to splice
+ * ----- not working
+ *   */
+function selectInArray() {
+    var list = document.querySelector('#list1');
+
+    list.addEventListener('click', function(ev) {
+    let checked = list.querySelector('.checked');
+    if (checked !== null) {
+        
+
+        var contentOfItem = checked.textContent;
+
+        var indexOfItem = taskList.tasks.indexOf(contentOfItem);
+
+        console.log(indexOfItem);
+
+        taskList.tasks.splice(indexOfItem, 1);
+        console.log(taskList.tasks);
+
+        console.log(typeof(contentOfItem));
+        
+
+    }
+}, false);
+
+}
+
+
+
+// array.prototype.indexof.call(parent.children, child)
 
 
 
 function clearArray() {
 
-    // clear only selected tasks
-        taskList.tasks = [];
+    // check if element is checked
+    // if element is not null 
+    // remove element from array
+    // get split index
+    
+    // for(i = 0; i < taskList.tasks.length; i++) {
+
+    //     var task = taskList.tasks[i];
+
+    //     var el = document.querySelector('.checked');
+
+    //     if (el !== null){
+    //         taskList.tasks.pop(task);      
+    //     }        // Create a text node
+    // }
+
 }
 
 
