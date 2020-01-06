@@ -5,64 +5,116 @@ var taskController = (function() {
 })();
 
 var UIcontroller = (function() {
-    
-    return {
+    var taskList = {
+        tasks: []
+    }
+
+
+    return { 
         getInput: function() {
             return {        
                 value: document.querySelector('#taskInput').value
             }
         },
-        addInputToUI: function(taskName) {
-            taskList.tasks.push(taskName);
+        addInputToArray: function(taskName) {
+            var task = {
+                name: taskName
+            }
+            taskList.tasks.push(task);
+        },
+        updateUI: function() {
+            for(let i = 0; i < taskList.tasks.length; i++) {
+            
+                    var task = taskList.tasks[i].name.value;
+                    console.log(taskList);
+                    
+                    var list = document.createElement("LI"); 
+                    list.className = 'list-group-item';                // Create a <li> node
+                    var listItem = document.createTextNode(task);         // Create a text node
+                }
+            
+                list.appendChild(listItem);                              // Append the text to <li>
+                document.getElementById("list1").appendChild(list);
+        },
+        clearInputfield: function() {
+            document.querySelector('#taskInput').value = '';
+        },
+        targetListelement: function() {
+            var list = document.querySelector('.list-group');
+            list.addEventListener('click', function(ev) {
+            if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+            }
+        }, false);
+        },
+        clearListElements: function() {
+            var ul = document.getElementById("list1");
+            var items = ul.getElementsByTagName("li");
+            console.log(items.length);
+        
+            for (var i = 0; i < items.length + 1; ++i) {
+                var el = document.querySelector('.checked');
+        
+                if (el !== null){
+                    el.remove(); 
+                    
+                }
+            }
         }
-        }
-    } 
 
 
+
+    }
+    
 
 })();
 
 
 var controller = (function(taskCtrl, UIctrl){
 
-    var taskList = {
-        tasks: []
-    }
+
 
     var ctrlAddItem = function() {
+
+
 
         // 1. get input
         input = UIctrl.getInput();
 
         // 2. add to array
-        UIctrl.addInputToUI(input);
+        UIctrl.addInputToArray(input);
 
         // 3. add to UI 
-        
+        UIctrl.updateUI();
+
+        // 4. empty input
+        UIctrl.clearInputfield();
 
 
         console.log('it works');
     }
 
 
-    var ctrlCheckItem = function() {
+    var ctrlCheckItem = (function() {
         // 1. highlight clicked item
+        UIctrl.targetListelement();
 
         // 2. store indexes in array
 
         // 3. for each index of array splice()
-    };
+    })();
 
 
     var ctrlRemoveItem = function() {
         //  1. check if clicked
+        UIctrl.clearListElements();
 
 
     }
 
     document.getElementById('addBtn').addEventListener('click', ctrlAddItem);
 
-    document.getElementById('clearList').addEventListener('click', ctrlAddItem);
+    document.getElementById('clearList').addEventListener('click', ctrlRemoveItem);
 
 
 })(taskController, UIcontroller);
