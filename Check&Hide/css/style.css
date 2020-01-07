@@ -1,5 +1,5 @@
 ul li.checked {
-    background: rgb(129, 129, 129);
+    background: rgb(129, 129, 129, 0.774);
     color: rgb(197, 197, 197);
     text-decoration: line-through;
 }
@@ -22,12 +22,33 @@ ul li.empty {
     
 }
 
-.list-group-item {
-    background-color: rgb(85, 85, 85);
+.btn-light {
+    background-color: #0000004a;
+    border-color: #e2e6ea00;
     color: white;
 }
 
+.btn-light:hover {
+    background-color: #8080804a;
+    border-color: #e2e6ea00;
+    color: white;
+}
+
+
+
+.list-group-item {
+    background-color: rgba(85, 85, 85, 0.774);
+    color: white;
+    border-radius: .25rem;
+}
+
 .fa-plus-circle {
-    color: rgb(85, 85, 85);
+    color: rgba(240, 240, 240, 0.774);
     size: 3em;
 }
+
+
+body {
+    background-image: url("../img/main-bg.jpg");
+    background-repeat: no-repeat;
+  }

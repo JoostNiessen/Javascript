@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>TODOLIST</title>
+  <title>JST - Check & Hide</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,51 +23,52 @@
 
 <body>
 
+
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <a class="navbar-brand" href="#">Check & Hide</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
+
         </ul>
       </div>
     </div>
   </nav>
 
-
+  <div class="container-fluid">
   <!-- Page Content -->
   <div class="row">
-      <div class="col-md-2">
-        <div class="header m-2 text-center"></div>
-        <ul class="list-group" id="list1">
-        </ul>
-        <form>
-            <div class="form-group text-center d-flex flex-row my-2">
-              <input type="text" class="form-control" id="taskInput" placeholder="I need to:">
-              <i id="addBtn" class="fas fa-plus-circle fa-2x mx-2"></i>
-            </div>
-          </form>
-          <button type="button" id="clearList" class="btn btn-danger mx-auto"><i class="fas fa-minus-circle mr-2"></i>Checked</button>
+    <div class="col-md-2">
+      <div class="header m-2 text-center text-light font-weight-bold text-uppercase">Monday</div>
+      <ul class="list-group" id="list1">
+      </ul>
+      <form class="fixed-bottom">
+          <div class="form-group text-center d-flex flex-row my-2 col-md-2">
+            <input type="text" class="form-control ml-1" id="taskInput" placeholder="I need to:">
+            <i id="addBtn" class="fas fa-plus-circle fa-2x mx-2"></i>
+            
+          </div>
+          <button type="button" id="clearAll" class="btn btn-light mb-2"><i class="far fa-trash-alt"></i></button>
 
-      </div>      
+          <button type="button" id="clearList" class="btn btn-light mb-2"><i class="fas fa-minus-circle "></i></button>
+
+        </form>
+
     </div>
+    
+  
+
+    
+  </div>
+  </div>
+
+
+
     
 
   <!-- Bootstrap core JavaScript -->
