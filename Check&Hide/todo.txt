@@ -1,0 +1,31 @@
+TODO list:
+
+// enter keypress voor mobiel
+
+// logo maken
+
+// meerdere naast elkaar
+
+// keypress haalt alles weg
+
+// bucket en empty icons -- 
+--// clear all
+--// clear all in array
+// define Array
+var list = [1, 2, 3, 4];
+function empty() {
+    //empty your array
+    list = [];
+}
+empty();
+
+// archive list
+
+// achtergrond toegevoegd
+
+// niet toevoegen als input leeg is 
+
+
+ik heb nu alle UI functies, nu wil ik deze ook in de arrays fixen zodat ik hier met collections van google firebase mee kan werken
+
+

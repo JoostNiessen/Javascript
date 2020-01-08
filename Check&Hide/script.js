@@ -12,15 +12,19 @@ var UIcontroller = (function() {
 
     return { 
         getInput: function() {
+            
             return {        
                 value: document.querySelector('#taskInput').value
             }
+
         },
         addInputToArray: function(taskName) {
-            var task = {
-                name: taskName
-            }
-            taskList.tasks.push(task);
+            
+                var task = {
+                    name: taskName
+                }
+                taskList.tasks.push(task);  
+            
         },
         updateUI: function() {
             for(let i = 0; i < taskList.tasks.length; i++) {
@@ -29,7 +33,7 @@ var UIcontroller = (function() {
                     console.log(taskList);
                     
                     var list = document.createElement("LI"); 
-                    list.className = 'list-group-item';                // Create a <li> node
+                    list.className = 'list-group-item rounded-5 mt-1';                // Create a <li> node
                     var listItem = document.createTextNode(task);         // Create a text node
                 }
             
@@ -60,10 +64,15 @@ var UIcontroller = (function() {
                     
                 }
             }
+        },
+        emptyList: function() {
+            var ul = document.getElementById("list1");
+            var items = ul.getElementsByTagName("li");
+            for (var i = 0; i < items.length;) {
+                var el = document.querySelector('.list-group-item');
+                     el.remove();     
+            }
         }
-
-
-
     }
     
 
@@ -109,12 +118,25 @@ var controller = (function(taskCtrl, UIctrl){
         //  1. check if clicked
         UIctrl.clearListElements();
 
-
     }
+
+    var ctrlEmptyList = function() {
+        UIctrl.emptyList();
+    }
+
+
 
     document.getElementById('addBtn').addEventListener('click', ctrlAddItem);
 
     document.getElementById('clearList').addEventListener('click', ctrlRemoveItem);
+    document.getElementById('emptyList').addEventListener('click', ctrlEmptyList);
+
+
+    document.addEventListener('keypress', function(event) {    
+        if (event.keyCode === 13 || event.which === 13) {
+            ctrlAddItem();
+        }    
+    });
 
 
 })(taskController, UIcontroller);
