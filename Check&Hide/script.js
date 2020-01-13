@@ -3,121 +3,152 @@ var taskList = {
 }
 
 
-var taskController = (function() {
-
+var taskController = (function () {
+    let task = {
+        name: "",
+        checked: false
+    }
 
     // // 0. check if item is checked 
     // checkIfChecked();
 
     // 1. get index of clicked array item
-    
+
     // var index = tasks.prototype.indexOf.call(ancestor, parent);
 
 
     // 2. splice array on index
 
-    return {
-        checkIfChecked: function() {
-            // 0. check if item is checked 
-            var listElement = document.querySelector('.list-group-item');
 
-            for (let i = 0; i < taskList.tasks.length; i++) {
-                const list = taskList.tasks;
-                const element = taskList.tasks[i]; 
+    let checkIfChecked = function () {
+        // 0. check if item is checked 
 
-                if (listElement.classList.contains('checked')) {
-                    console.log(list.indexOf(element) + 'was checked');                  
-                }
-                
+        //  gebruik filter ga ff kloten met fake data 
+
+
+        var listElement = document.querySelector('.list-group-item');
+        const array = taskList.tasks;
+
+        for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+
+            if (listElement.classList.contains('checked')) {
+                element.checked = true;
+                console.log(array.indexOf(element) + 'was checked');
+            } else {
+                console.log(array.indexOf(element) + 'was NOT checked');
+
             }
-
-
-
-
 
         }
+
     }
 
-    
+    return {
+        checkIfChecked: checkIfChecked
+    }
+
+
 })();
 
-var UIcontroller = (function() {
+var UIcontroller = (function () {
+    let taskList = {
+        tasks: []
+    },
+    defaultSettings = {
+        inputSelector: '#taskInput'
+    }
+    let setSettings = function(settings){
+        Object.assign(defaultSettings, settings);
+    }
 
+    let getInput = function () {
 
+        return {
+            value: document.querySelector(defaultSettings.inputSelector).value
+        }
 
-    return { 
-        getInput: function() {
-            
-            return {        
-                value: document.querySelector('#taskInput').value
+    }
+    let addInputToArray = function (taskName) {
+
+        var task = {
+            name: taskName,
+            checked: false
+        }
+        taskList.tasks.push(task);
+    }
+    let updateUI = function () {
+        for (let i = 0; i < taskList.tasks.length; i++) {
+
+            var task = taskList.tasks[i].name.value;
+
+            var list = document.createElement("LI");
+            list.className = 'list-group-item rounded-5 mt-1';                // Create a <li> node
+            var listItem = document.createTextNode(task);         // Create a text node
+        }
+
+        list.appendChild(listItem);                              // Append the text to <li>
+        document.getElementById("list1").appendChild(list);
+    }
+    let clearInputfield = function () {
+        document.querySelector('#taskInput').value = '';
+    }
+    let targetListelement = function () {
+        var list = document.querySelector('.list-group');
+        list.addEventListener('click', function (ev) {
+            // for (task in taskList.tasks) {
+            //     taskList.tasks[task].checked = true;
+            // }
+            for (let i = 0; i < taskList.tasks.length; i++) {
+                const element = taskList.tasks[i];
+                element.checked = true;
+                console.log(element);
             }
 
-        },
-        addInputToArray: function(taskName) {
-            
-                var task = {
-                    name: taskName
-                }
-                taskList.tasks.push(task);   
-        },
-        updateUI: function() {
-            for(let i = 0; i < taskList.tasks.length; i++) {
-            
-                    var task = taskList.tasks[i].name.value;
-                    console.log(taskList);
-                    
-                    var list = document.createElement("LI"); 
-                    list.className = 'list-group-item rounded-5 mt-1';                // Create a <li> node
-                    var listItem = document.createTextNode(task);         // Create a text node
-                }
-            
-                list.appendChild(listItem);                              // Append the text to <li>
-                document.getElementById("list1").appendChild(list);
-        },
-        clearInputfield: function() {
-            document.querySelector('#taskInput').value = '';
-        },
-        targetListelement: function() {
-            var list = document.querySelector('.list-group');
-            list.addEventListener('click', function(ev) {
             if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
+                ev.target.classList.toggle('checked');
+
             }
         }, false);
-        },
-        clearListElements: function() {
-            var ul = document.getElementById("list1");
-            var items = ul.getElementsByTagName("li");
-            console.log(items.length);
-        
-            for (var i = 0; i < items.length + 1; ++i) {
-                var el = document.querySelector('.checked');
-        
-                if (el !== null){
-                    el.remove();              
-                }
-            }
-        },
-        emptyList: function() {
-            var ul = document.getElementById("list1");
-            var items = ul.getElementsByTagName("li");
-            for (var i = 0; i < items.length;) {
-                var el = document.querySelector('.list-group-item');
-                el.remove();     
+    }
+    let clearListElements = function () {
+        var ul = document.getElementById("list1");
+        var items = ul.getElementsByTagName("li");
+
+        for (var i = 0; i < items.length + 1; ++i) {
+            var el = document.querySelector('.checked');
+
+            if (el !== null) {
+                el.remove();
             }
         }
     }
-    
+    let emptyList = function () {
+        var ul = document.getElementById("list1");
+        var items = ul.getElementsByTagName("li");
+        for (var i = 0; i < items.length;) {
+            var el = document.querySelector('.list-group-item');
+            el.remove();
+        }
+    }
+
+    return {
+        getInput: getInput,
+        addInputToArray: addInputToArray,
+        clearInputfield: clearInputfield,
+        targetListelement: targetListelement,
+        emptyList: emptyList,
+        clearListElements: clearListElements,
+        updateUI: updateUI
+
+    }
 
 })();
 
 
-var controller = (function(taskCtrl, UIctrl){
-    
-    
+var controller = (function (taskCtrl, UIctrl) {
 
-
-    var ctrlAddItem = function() {
+    var ctrlAddItem = function () {
 
         // 1. get input
         input = UIctrl.getInput();
@@ -134,7 +165,7 @@ var controller = (function(taskCtrl, UIctrl){
     }
 
 
-    var ctrlCheckItem = (function() {
+    var ctrlCheckItem = (function () {
         // 1. highlight clicked item
         UIctrl.targetListelement();
 
@@ -145,7 +176,7 @@ var controller = (function(taskCtrl, UIctrl){
     })();
 
 
-    var ctrlRemoveItem = function() {
+    var ctrlRemoveItem = function () {
 
         // 1. check if items are clicked 
         taskCtrl.checkIfChecked();
@@ -156,12 +187,9 @@ var controller = (function(taskCtrl, UIctrl){
         //  1. Clear list elements UI
         UIctrl.clearListElements();
 
-
-
-
     }
 
-    var ctrlEmptyList = function() {
+    var ctrlEmptyList = function () {
         UIctrl.emptyList();
     }
 
@@ -173,10 +201,10 @@ var controller = (function(taskCtrl, UIctrl){
     document.getElementById('emptyList').addEventListener('click', ctrlEmptyList);
 
 
-    document.addEventListener('keypress', function(event) {    
+    document.addEventListener('keypress', function (event) {
         if (event.keyCode === 13 || event.which === 13) {
             ctrlAddItem();
-        }    
+        }
     });
 
 
@@ -193,15 +221,15 @@ var controller = (function(taskCtrl, UIctrl){
 //  * upDateUI();
 //  */
 // document.getElementById('addBtn').addEventListener('click', function() {
-    
+
 //     addInputValuesToArray(getInputValues());
-    
+
 //     updateUI();
-     
+
 //     console.log(taskList);
- 
+
 //     document.querySelector('#taskInput').value = '';
-    
+
 // });
 
 
@@ -219,7 +247,7 @@ var controller = (function(taskCtrl, UIctrl){
 //     clearListElements();
 
 //     console.log(taskList.tasks);
-    
+
 // });
 
 
@@ -234,14 +262,14 @@ var controller = (function(taskCtrl, UIctrl){
 //     var items = ul.getElementsByTagName("li");
 //     console.log(items.length);
 
-    
-    
+
+
 //     for (var i = 0; i < items.length + 1; ++i) {
 //         var el = document.querySelector('.checked');
 
 //         if (el !== null){
 //             el.remove(); 
-            
+
 //         }
 //     }
 // }
@@ -277,7 +305,7 @@ var controller = (function(taskCtrl, UIctrl){
 //  * Appends listItems to List 
 //  */
 // function updateUI() {
-    
+
 //     for(let i = 0; i < taskList.tasks.length; i++) {
 
 //         var task = taskList.tasks[i];
@@ -319,7 +347,7 @@ var controller = (function(taskCtrl, UIctrl){
 //     list.addEventListener('click', function(ev) {
 //     let checked = list.querySelector('.checked');
 //     if (checked !== null) {
-        
+
 
 //         var contentOfItem = checked.textContent;
 
@@ -331,7 +359,7 @@ var controller = (function(taskCtrl, UIctrl){
 //         console.log(taskList.tasks);
 
 //         console.log(typeof(contentOfItem));
-        
+
 
 //     }
 // }, false);
@@ -350,7 +378,7 @@ var controller = (function(taskCtrl, UIctrl){
 //     // if element is not null 
 //     // remove element from array
 //     // get split index
-    
+
 //     // for(i = 0; i < taskList.tasks.length; i++) {
 
 //     //     var task = taskList.tasks[i];
