@@ -1,13 +1,48 @@
+var taskList = {
+    tasks: []
+}
 
 
 var taskController = (function() {
+
+
+    // // 0. check if item is checked 
+    // checkIfChecked();
+
+    // 1. get index of clicked array item
+    
+    // var index = tasks.prototype.indexOf.call(ancestor, parent);
+
+
+    // 2. splice array on index
+
+    return {
+        checkIfChecked: function() {
+            // 0. check if item is checked 
+            var listElement = document.querySelector('.list-group-item');
+
+            for (let i = 0; i < taskList.tasks.length; i++) {
+                const list = taskList.tasks;
+                const element = taskList.tasks[i]; 
+
+                if (listElement.classList.contains('checked')) {
+                    console.log(list.indexOf(element) + 'was checked');                  
+                }
+                
+            }
+
+
+
+
+
+        }
+    }
+
     
 })();
 
 var UIcontroller = (function() {
-    var taskList = {
-        tasks: []
-    }
+
 
 
     return { 
@@ -23,8 +58,7 @@ var UIcontroller = (function() {
                 var task = {
                     name: taskName
                 }
-                taskList.tasks.push(task);  
-            
+                taskList.tasks.push(task);   
         },
         updateUI: function() {
             for(let i = 0; i < taskList.tasks.length; i++) {
@@ -60,8 +94,7 @@ var UIcontroller = (function() {
                 var el = document.querySelector('.checked');
         
                 if (el !== null){
-                    el.remove(); 
-                    
+                    el.remove();              
                 }
             }
         },
@@ -70,7 +103,7 @@ var UIcontroller = (function() {
             var items = ul.getElementsByTagName("li");
             for (var i = 0; i < items.length;) {
                 var el = document.querySelector('.list-group-item');
-                     el.remove();     
+                el.remove();     
             }
         }
     }
@@ -80,12 +113,11 @@ var UIcontroller = (function() {
 
 
 var controller = (function(taskCtrl, UIctrl){
-
+    
+    
 
 
     var ctrlAddItem = function() {
-
-
 
         // 1. get input
         input = UIctrl.getInput();
@@ -99,8 +131,6 @@ var controller = (function(taskCtrl, UIctrl){
         // 4. empty input
         UIctrl.clearInputfield();
 
-
-        console.log('it works');
     }
 
 
@@ -110,13 +140,24 @@ var controller = (function(taskCtrl, UIctrl){
 
         // 2. store indexes in array
 
+
         // 3. for each index of array splice()
     })();
 
 
     var ctrlRemoveItem = function() {
-        //  1. check if clicked
+
+        // 1. check if items are clicked 
+        taskCtrl.checkIfChecked();
+
+        // 2. remove clicked items from array 
+
+
+        //  1. Clear list elements UI
         UIctrl.clearListElements();
+
+
+
 
     }
 
