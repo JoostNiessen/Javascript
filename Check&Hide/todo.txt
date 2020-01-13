@@ -3,6 +3,8 @@ TODO list:
 // enter keypress voor mobiel
 
 // logo maken
+- kernwaarden opgeschreven
+
 
 // meerdere naast elkaar
 
@@ -19,7 +21,7 @@ function empty() {
 }
 empty();
 
-// archive list
+// archive list knop
 
 // achtergrond toegevoegd
 
@@ -29,3 +31,25 @@ empty();
 ik heb nu alle UI functies, nu wil ik deze ook in de arrays fixen zodat ik hier met collections van google firebase mee kan werken
 
 
+ik kan er in object een checked property bijduwen
+-- dan kan ik makkelijker alle object.array.object.checked == false weghalen
+advies?
+
+Wat is mijn vraag:
+Ik wil als ik op clear checked elements knop druk, dat als een element
+check is hij:
+- uit de UI verdwijnen
+- uit de array verdwijnen
+
+
+
+
+
+ALs ik straks meerdere lists heb wil ik DRY toepassen om elke lijst zijn eigen ding te laten doen
+hier wil ik tips over 
+zodat ik zo min mogelijk hoef te coden. Misschien zou het wat zijn om:
+alvorens aan te kunnen geven hoeveel lijsten ik wil
+zodat hij zelf x lijsten aanmaakt 
+
+
+INDEX 2 is de testUI versie

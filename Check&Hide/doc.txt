@@ -1,0 +1,37 @@
+1. getInput
+
+2. setArray + UpdateUI
+
+3. getClickedElement + addClass + updateUI
+
+4. filterClicked + setNewArray + updateUI
+
+5. 
+
+
+alles omgegooid en opnieuw gemaakt:
+updateUI werkt nu beter, bij empty list kon hij geen update doen omdat 
+de array geen elementen had. --> if array > 0 :
+update ui, else : zet array [] en maak elementen leeg. 
+
+om een target te doen heb ik de list element gedaan en in die target 
+een for loop gezet die voor elke taak die dus een target is de value van de 
+checked property op true te zetten. 
+-- werkt alweer niet, ook niet als ik een target zet 
+
+var taskList = tasks = [{name: "yes", checked: true}, {name: "yes", checked: false}, {name: "yes", checked: true}, {name: "yes", checked: false}];
+
+function checkTasks(task) {
+  return task.checked;
+}
+
+function checkFilter() {
+  console.log(tasks.filter(checkTasks));
+}
+
+
+wat nu dus niet werkt is de functie die bij het geselecteerde element
+checked = true toevoegd. ik doe ergens iets verkeerd om maar ik weet niet waar het probleem zit. 
+zoals de targetCheckedElement nu werkt, doet hij het deels. Op een 
+of andere manier zet hij de rest ook op checked en verwijdert vervolgens alles
+

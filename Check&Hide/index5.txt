@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to get every element in the array that has a value of 18 or more.</p>
+
+<button id="abba">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+var taskList = { tasks = [] };
+
+taskList.tasks.push(task = {name: "yes", checked: true});
+
+taskList.tasks.push(task = {name: "no", checked: false});
+
+function log() {
+console.log('sf');
+}
+//, task = {name: "yes", checked: true}, task = {name: "yes", checked: false}];
+
+function checkTasks(task) {
+  return task.checked;
+}
+
+function checkFilter() {
+  console.log(tasks.filter(checkTasks));
+}
+
+document.getElementById('abba').addEventListener('click', log);
+</script>
+
+</body>
+</html>
