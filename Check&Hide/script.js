@@ -9,7 +9,8 @@ var taskController = (function () {
             list1: 'list1',
             addTaskButton: 'addBtn',
             removeTaskButton: 'clearList',
-            emptyListButton: 'emptyList'
+            emptyListButton: 'emptyList',
+            archiveListButton: 'archiveList'
 
         }
 
@@ -22,9 +23,9 @@ var taskController = (function () {
      * gets input from the DOM
      */
     let getInput = function () {
-        return {
-            value: document.querySelector(defaultSettings.inputSelector).value
-        }
+        let input = document.querySelector(defaultSettings.inputSelector).value;        
+
+        return input;
     }
 
     /**
@@ -33,15 +34,13 @@ var taskController = (function () {
     let addInputToArray = function (taskName) {
 
         var task = {
-            name: taskName,
-            checked: false
+            name: taskName
         }
 
         taskList.tasks.push(task);
 
         console.log(taskList.tasks);
-
-
+        
     }
 
 
@@ -70,7 +69,7 @@ var taskController = (function () {
         }
 
         for (let i = 0; i < taskList.tasks.length; i++) {
-            var taskName = taskList.tasks[i].name.value;
+            var taskName = taskList.tasks[i].name;
         }
 
         list.insertAdjacentHTML('beforeend', buttonMaker(taskName));
@@ -86,6 +85,9 @@ var taskController = (function () {
 
     }
 
+    /**
+     * Remove all elements of List1
+     */
     let removeUI = function () {
 
         var ul = document.getElementById(defaultSettings.list1);
@@ -113,46 +115,39 @@ var taskController = (function () {
         list.addEventListener('click', function (ev) {
 
             if (ev.target.tagName === 'LI') {
-
-                for (let i = 0; i < taskList.tasks.length; i++) {
-                    const task = taskList.tasks[i];
-                    task.checked = true;
-                }
                 ev.target.classList.toggle('checked');
             }
 
         }, false);
     }
 
+
+    /**
+     * make array of all elements that are 'checked'
+     * assigns array to new one 
+     */
     let targetCheckedElement = function () {
 
-        var list = document.querySelector('.list-group-item');
+        var classes = document.getElementsByClassName("checked");
+        var values = Array.prototype.map.call(classes, function(el) {              
+            return el.textContent;
+        });
 
-        for (let i = 0; i < taskList.tasks.length; i++) {
-            const task = taskList.tasks[i];
-            if (list.classList === 'checked') {
-                task.checked = true;
-            }
+        var checked = [];
+
+        for (let i = 0; i < values.length; i++) {
+            const taskName = values[i];
+            var task = {
+                name: taskName
+            }                    
+            checked.push(task);         
         }
-    }
 
-    /**
-     * uses task as parameter to filter array
-     */
-    function checkTasks(task) {
-        return !task.checked;
-    }
+        taskList.tasks = checked;
 
-    /**
-     * filters checked tasks
-     * sets taskList.tasks equal to array of unchecked tasks
-     */
-    function checkFilter() {
-        console.log(taskList.tasks.filter(checkTasks));
-        var filtered = taskList.tasks.filter(checkTasks);
-        taskList.tasks = filtered;
+        console.log(taskList.tasks);    
+     
     }
-
 
     return {
         getInput: getInput,
@@ -205,25 +200,16 @@ var controller = (function (UIctrl) {
 
     var ctrlRemoveItem = function () {
 
+        UIctrl.targetCheckedElement();
+
         UIctrl.removeUI();
 
-
-        // 1. reassigns array to filtered array
-        UIctrl.checkFilter();
-
-
         UIctrl.updateUI();
-
-
-        // 2. remove clicked items from array 
-
-
-        //  1. Clear list elements UI
-        // UIctrl.clearListElements();
 
     }
 
     var ctrlEmptyList = function () {
+        
         UIctrl.emptyList();
 
         UIctrl.updateUI();
@@ -231,7 +217,6 @@ var controller = (function (UIctrl) {
 
 
     var ctrlArchiveList = function () {
-        UIctrl.targetCheckedElement();
 
     }
 
@@ -240,6 +225,7 @@ var controller = (function (UIctrl) {
 
     document.getElementById(taskController.defaultSettings.removeTaskButton).addEventListener('click', ctrlRemoveItem);
     document.getElementById(taskController.defaultSettings.emptyListButton).addEventListener('click', ctrlEmptyList);
+    document.getElementById(taskController.defaultSettings.archiveListButton).addEventListener('click', ctrlArchiveList);
 
 
     // document.addEventListener('keypress', function (event) {
