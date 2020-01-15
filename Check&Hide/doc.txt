@@ -35,3 +35,5 @@ checked = true toevoegd. ik doe ergens iets verkeerd om maar ik weet niet waar h
 zoals de targetCheckedElement nu werkt, doet hij het deels. Op een 
 of andere manier zet hij de rest ook op checked en verwijdert vervolgens alles
 
+
+volgende stap. Kijken of ik er een andere back end aan kan hangen waar hij de info naartoe schrijft. 

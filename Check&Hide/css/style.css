@@ -22,6 +22,10 @@ ul li.empty {
     
 }
 
+.btn-star {
+    color: red;
+}
+
 
 .btn-light {
     background-color: #0000004a;

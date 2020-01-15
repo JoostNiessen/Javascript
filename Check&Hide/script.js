@@ -5,7 +5,12 @@ var taskController = (function () {
         tasks: []
     },
     defaultSettings = {
-        inputSelector: '#taskInput'
+        inputSelector: '#taskInput',
+        list1: 'list1',
+        addTaskButton: 'addBtn',
+        removeTaskButton: 'clearList',
+        emptyListButton: 'emptyList'
+
     }
 
 
@@ -45,27 +50,36 @@ var taskController = (function () {
      * ELSE: selects list and removes all elements inside
      */
     let updateUI = function () {
+        
         if (taskList.tasks.length > 0) {
-            for (let i = 0; i < taskList.tasks.length; i++) {
-
-                var taskName = taskList.tasks[i].name.value;
-
-                var listElement = document.createElement("LI");
-                listElement.className = 'list-group-item rounded-5 mt-1';                // Create a <li> node
-                var listItemValue = document.createTextNode(taskName);         // Create a text node
-            }
-
-            listElement.appendChild(listItemValue);                              // Append the text to <li>
-            document.getElementById("list1").appendChild(listElement);
-
+            createListElement();
         } else {
-            var ul = document.getElementById("list1");
-            var items = ul.getElementsByTagName("li");
-            for (var i = 0; i < items.length;) {
-                var el = document.querySelector('.list-group-item');
-                el.remove();
-            }
+            removeUI();
         }
+    }
+
+    let createListElement = function () {
+        for (let i = 0; i < taskList.tasks.length; i++) {
+
+            var taskName = taskList.tasks[i].name.value;
+
+            var listElement = document.createElement("LI");
+            listElement.className = 'list-group-item rounded-5 mt-1 d-flex';                // Create a <li> node
+            var listItemValue = document.createTextNode(taskName);
+
+            var buttonElement = document.createElement("BUTTON");
+            buttonElement.className = 'btn btn-star d-flex ml-auto pt-1';                
+
+            var iconElement = document.createElement("I");
+            iconElement.className = 'far fa-star';             
+            
+        }
+
+        listElement.appendChild(listItemValue);                              // Append the text to <li>
+        document.getElementById("list1").appendChild(listElement);
+        document.querySelector(".list-group-item").appendChild(buttonElement);
+        document.querySelector(".btn-star").appendChild(iconElement);
+
     }
 
     /**
@@ -75,7 +89,15 @@ var taskController = (function () {
 
         taskList.tasks = [];
 
-        updateUI();
+    }
+
+    let removeUI = function () {
+        var ul = document.getElementById("list1");
+        var items = ul.getElementsByTagName("li");
+        for (var i = 0; i < items.length;) {
+            var el = document.querySelector('.list-group-item');
+            el.remove();
+        }
     }
 
     /**
@@ -94,10 +116,10 @@ var taskController = (function () {
 
             if (ev.target.tagName === 'LI') {
 
-                for (let i = 0; i < taskList.tasks.length; i++) {
-                    const task = taskList.tasks[i];
-                    task.checked = true;
-                }
+                // for (let i = 0; i < taskList.tasks.length; i++) {
+                //     const task = taskList.tasks[i];
+                //     task.checked = true;
+                // }
                 ev.target.classList.toggle('checked');
             }
 
@@ -105,19 +127,16 @@ var taskController = (function () {
     }
 
     let targetCheckedElement = function () {
-        var list = document.querySelector('.list-group');
-        list.addEventListener('click', function (ev) {
 
+        var list = document.querySelector('.list-group-item');
 
                 for (let i = 0; i < taskList.tasks.length; i++) {
                     const task = taskList.tasks[i];
-                    if (ev.target.classList === 'checked') {
+                    if (list.classList === 'checked') {
                         task.checked = true;
                     }
                 }
             
-
-        }, false);
     }
 
     /**
@@ -133,7 +152,8 @@ var taskController = (function () {
      */
     function checkFilter() {
         console.log(taskList.tasks.filter(checkTasks));
-        taskList.tasks = taskList.tasks.filter(checkTasks);
+        var filtered = taskList.tasks.filter(checkTasks);
+        taskList.tasks = filtered;
     }
 
 
@@ -146,7 +166,9 @@ var taskController = (function () {
         targetListelement: targetListelement,
         checkTasks: checkTasks,
         checkFilter: checkFilter,
-        targetCheckedElement: targetCheckedElement
+        targetCheckedElement: targetCheckedElement,
+        defaultSettings: defaultSettings,
+        removeUI: removeUI
     }
 
 })();
@@ -168,7 +190,6 @@ var controller = (function (UIctrl) {
         // 4. empty input
         UIctrl.emptyInputField();
 
-        
 
     }
 
@@ -180,14 +201,19 @@ var controller = (function (UIctrl) {
         // 2. filter checked items
         UIctrl.targetCheckedElement();
 
+
         // 3. for each index of array splice()
     })();
 
 
     var ctrlRemoveItem = function () {
 
-        // 1. check if items are clicked
+        UIctrl.removeUI();
+        
+
+        // 1. reassigns array to filtered array
         UIctrl.checkFilter();
+
 
         UIctrl.updateUI();
 
@@ -202,15 +228,22 @@ var controller = (function (UIctrl) {
 
     var ctrlEmptyList = function () {
         UIctrl.emptyList();
+
+        UIctrl.updateUI();
     }
 
 
+    var ctrlArchiveList = function () {
 
-    document.getElementById('addBtn').addEventListener('click', ctrlAddItem);
+    }
 
-    document.getElementById('clearList').addEventListener('click', ctrlRemoveItem);
-    document.getElementById('emptyList').addEventListener('click', ctrlEmptyList);
 
+    document.getElementById(taskController.defaultSettings.addTaskButton).addEventListener('click', ctrlAddItem);
+
+    document.getElementById(taskController.defaultSettings.removeTaskButton).addEventListener('click', ctrlRemoveItem);
+    document.getElementById(taskController.defaultSettings.emptyListButton).addEventListener('click', ctrlEmptyList);
+
+    document.getElementById(taskController.defaultSettings.archiveList).addEventListener('click', ctrlArchiveList);
 
     // document.addEventListener('keypress', function (event) {
     //     if (event.keyCode === 13 || event.which === 13) {

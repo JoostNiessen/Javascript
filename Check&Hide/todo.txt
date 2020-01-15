@@ -50,6 +50,18 @@ hier wil ik tips over
 zodat ik zo min mogelijk hoef te coden. Misschien zou het wat zijn om:
 alvorens aan te kunnen geven hoeveel lijsten ik wil
 zodat hij zelf x lijsten aanmaakt 
+- misschien voor elke lijst een nieuwe module met settings ?
+
+
 
 
 INDEX 2 is de testUI versie
+
+I DID
+-- buttons generiek
+-- removeUI functie
+-- createListelement
+-- add star to listElement
+    -- make button of star
+    geleerd om elementen parent child te doen
+    -- button star werkt nog niet helemaal
