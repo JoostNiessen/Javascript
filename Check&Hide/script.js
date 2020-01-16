@@ -66,7 +66,7 @@ var taskController = (function () {
         var list = document.getElementById(defaultSettings.list1);
 
         let buttonMaker = function (taskName) {
-            var button = '<li class="list-group-item rounded-5 mt-1 d-flex unchecked">' + taskName + '<button id="star" class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
+            var button = '<li class="list-group-item rounded-5 mt-1 d-flex unstarred unchecked">' + taskName + '<button id="star" class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
             return button;
         }
 
@@ -134,38 +134,72 @@ var taskController = (function () {
         document.getElementById(defaultSettings.list1).addEventListener("click", function (ev) {
 
             if (ev.target && ev.target.nodeName == "I") {
-                ev.target.classList.toggle('starred');
+                ev.target.classList.toggle('starredStyle');
                 var parent = ev.target.parentNode;
-                parent.parentNode.classList.toggle('starred');    
-                prioritizeStarredTasks();              
+                parent.parentNode.classList.toggle('unstarred');    
+                parent.parentNode.classList.toggle('starred');  
+                
+                
+
+                prioritizeStarredTasks();       
+                
             }
         });
     }
 
+    let makeNewObjectArray = function (classArray) {
 
-    let prioritizeStarredTasks = function () {
-        let values = getArrayOfElements('starred');
+        let newObjectArray = [];
 
-        let starred = [];
-
-        for (let i = 0; i < values.length; i++) {
-            const taskName = values[i];
+        for (let i = 0; i < classArray.length; i++) {
+            const taskName = classArray[i];
             var task = {
                 name: taskName
             }
-            starred.push(task);
+            newObjectArray.push(task);
+        } 
+
+        return newObjectArray;
+
+    }
+
+    let priorityHandler = function () {
+        removeUI();
+
+        targetStarredTasks();
+        updateUI();
+    }
+
+    let prioritizeStarredTasks = function () {
+
+        var starred = makeNewObjectArray(getArrayOfElements('starred'));
+        var unstarred = makeNewObjectArray(getArrayOfElements('unstarred'));
+
+
+        emptyList();
+
+
+        for (let i = 0; i < starred.length; i++) {
+            const element = starred[i];
+            taskList.tasks.push(element)            
         }
 
-        console.log(starred);
+        for (let i = 0; i < unstarred.length; i++) {
+            const element = unstarred[i];
+            taskList.tasks.push(element)            
+        }
+
+
         
-
-
+        console.log(taskList.tasks);
+        
+               
     }
 
 
 
     let getArrayOfElements = function (className) {
-        var classes = document.getElementsByClassName("unchecked");
+        var classes = document.getElementsByClassName(className);
         var values = Array.prototype.map.call(classes, function (el) {
             return el.textContent;
         });
@@ -192,6 +226,9 @@ var taskController = (function () {
             checked.push(task);
         }
 
+        console.log(checked);
+        
+
         taskList.tasks = checked;
 
     }
@@ -203,6 +240,7 @@ var taskController = (function () {
         addInputToArray: addInputToArray,
         emptyList: emptyList,
         updateUI: updateUI,
+        priorityHandler: priorityHandler,
         emptyInputField: emptyInputField,
         targetListelement: targetListelement,
         targetCheckedElement: targetCheckedElement,
@@ -240,7 +278,7 @@ var controller = (function (UIctrl) {
 
         // 2. filter checked items
 
-        UIctrl.targetStarredTasks();
+        UIctrl.priorityHandler();
 
 
         // 3. for each index of array splice()
@@ -285,3 +323,21 @@ var controller = (function (UIctrl) {
 
 
 })(taskController);
+
+
+
+    //     /**
+    //  * uses task as parameter to filter array
+    //  */
+    // function checkTasks(task) {
+    //     return  ;
+    // }
+
+    // /**
+    //  * filters checked tasks
+    //  * sets taskList.tasks equal to array of unchecked tasks
+    //  */
+    // function checkFilter() {
+    //     console.log(taskList.tasks.filter(checkTasks));
+    //     taskList.tasks = taskList.tasks.filter(checkTasks);
+    // }
