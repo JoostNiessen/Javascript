@@ -65,3 +65,18 @@ I DID
     -- make button of star
     geleerd om elementen parent child te doen
     -- button star werkt nog niet helemaal
+-- hele parent child ding weer weggegooid en met insertHTML
+    -- hier nog een hele handige closure van gemaakt.
+-- elementchecker gemaakt: kijk of klasse er is, return array met tekstcontent
+    voeg die weer terug aan object en vervang de oude array door de nieuwe
+    -- deze zat verkeerdom, dus met toggle een nieuwe klasse toegevoegd en een andere juist weggehaald
+-- star element kunnen targeten op een nette manier met event delegation
+    -- class toegevoegd die de stars geel maakt
+    -- functie voegt ook class toe aan het listobject waar die inzit 
+
+--DRY principe gebruikt om elements from array te retrieven
+ik merk dat ik systematisch begin na te denken 
+
+
+
+

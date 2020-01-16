@@ -13,6 +13,7 @@ alles omgegooid en opnieuw gemaakt:
 updateUI werkt nu beter, bij empty list kon hij geen update doen omdat 
 de array geen elementen had. --> if array > 0 :
 update ui, else : zet array [] en maak elementen leeg. 
+-- removeUI functie gemaakt -> komt terug in removeItems
 
 om een target te doen heb ik de list element gedaan en in die target 
 een for loop gezet die voor elke taak die dus een target is de value van de 
@@ -37,3 +38,12 @@ of andere manier zet hij de rest ook op checked en verwijdert vervolgens alles
 
 
 volgende stap. Kijken of ik er een andere back end aan kan hangen waar hij de info naartoe schrijft. 
+
+
+        inputSelector: '#taskInput',
+        list1: 'list1',
+        addTaskButton: 'addBtn',
+        removeTaskButton: 'clearBtn',
+        emptyListButton: 'emptyBtn'
+
+

@@ -7,6 +7,8 @@ var taskController = (function () {
         defaultSettings = {
             inputSelector: '#taskInput',
             list1: 'list1',
+            listItems: '.list-group-item',
+            starButton: 'star',
             addTaskButton: 'addBtn',
             removeTaskButton: 'clearList',
             emptyListButton: 'emptyList',
@@ -23,7 +25,7 @@ var taskController = (function () {
      * gets input from the DOM
      */
     let getInput = function () {
-        let input = document.querySelector(defaultSettings.inputSelector).value;        
+        let input = document.querySelector(defaultSettings.inputSelector).value;
 
         return input;
     }
@@ -40,7 +42,7 @@ var taskController = (function () {
         taskList.tasks.push(task);
 
         console.log(taskList.tasks);
-        
+
     }
 
 
@@ -64,7 +66,7 @@ var taskController = (function () {
         var list = document.getElementById(defaultSettings.list1);
 
         let buttonMaker = function (taskName) {
-            var button = '<li class="list-group-item rounded-5 mt-1 d-flex">' + taskName + '<button class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
+            var button = '<li class="list-group-item rounded-5 mt-1 d-flex unchecked">' + taskName + '<button id="star" class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
             return button;
         }
 
@@ -114,11 +116,61 @@ var taskController = (function () {
         var list = document.getElementById(defaultSettings.list1);
         list.addEventListener('click', function (ev) {
 
-            if (ev.target.tagName === 'LI') {
+            if (ev.target && ev.target.nodeName == "LI") {
+                ev.target.classList.toggle('unchecked');
                 ev.target.classList.toggle('checked');
             }
 
         }, false);
+    }
+
+
+    /**
+     * Targets the 'star' and sets classes to the elements:
+     * 'starred' to the I element itself.
+     * 'starred' to the LI element its in.
+     */
+    let targetStarredTasks = function () {
+        document.getElementById(defaultSettings.list1).addEventListener("click", function (ev) {
+
+            if (ev.target && ev.target.nodeName == "I") {
+                ev.target.classList.toggle('starred');
+                var parent = ev.target.parentNode;
+                parent.parentNode.classList.toggle('starred');    
+                prioritizeStarredTasks();              
+            }
+        });
+    }
+
+
+    let prioritizeStarredTasks = function () {
+        let values = getArrayOfElements('starred');
+
+        let starred = [];
+
+        for (let i = 0; i < values.length; i++) {
+            const taskName = values[i];
+            var task = {
+                name: taskName
+            }
+            starred.push(task);
+        }
+
+        console.log(starred);
+        
+
+
+    }
+
+
+
+    let getArrayOfElements = function (className) {
+        var classes = document.getElementsByClassName("unchecked");
+        var values = Array.prototype.map.call(classes, function (el) {
+            return el.textContent;
+        });
+
+        return values;
     }
 
 
@@ -128,26 +180,23 @@ var taskController = (function () {
      */
     let targetCheckedElement = function () {
 
-        var classes = document.getElementsByClassName("checked");
-        var values = Array.prototype.map.call(classes, function(el) {              
-            return el.textContent;
-        });
+        let values = getArrayOfElements('checked');
 
-        var checked = [];
+        let checked = [];
 
         for (let i = 0; i < values.length; i++) {
             const taskName = values[i];
             var task = {
                 name: taskName
-            }                    
-            checked.push(task);         
+            }
+            checked.push(task);
         }
 
         taskList.tasks = checked;
 
-        console.log(taskList.tasks);    
-     
     }
+
+
 
     return {
         getInput: getInput,
@@ -156,11 +205,10 @@ var taskController = (function () {
         updateUI: updateUI,
         emptyInputField: emptyInputField,
         targetListelement: targetListelement,
-        checkTasks: checkTasks,
-        checkFilter: checkFilter,
         targetCheckedElement: targetCheckedElement,
         defaultSettings: defaultSettings,
-        removeUI: removeUI
+        removeUI: removeUI,
+        targetStarredTasks: targetStarredTasks
     }
 
 })();
@@ -191,7 +239,8 @@ var controller = (function (UIctrl) {
         UIctrl.targetListelement();
 
         // 2. filter checked items
-        // UIctrl.targetCheckedElement();
+
+        UIctrl.targetStarredTasks();
 
 
         // 3. for each index of array splice()
@@ -209,7 +258,7 @@ var controller = (function (UIctrl) {
     }
 
     var ctrlEmptyList = function () {
-        
+
         UIctrl.emptyList();
 
         UIctrl.updateUI();

@@ -22,9 +22,20 @@ ul li.empty {
     
 }
 
-.btn-star {
-    color: red;
+.starred {
+    color: gold;
+    /* rgba(158, 122, 43, 0.774) */
+
 }
+
+.btn-star {
+    color: black;
+}
+
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
 
 
 .btn-light {
@@ -45,6 +56,7 @@ ul li.empty {
     background-color: rgba(85, 85, 85, 0.774);
     color: white;
     border-radius: .25rem;
+    padding-right: 0px;
 }
 
 .fa-plus-circle {
