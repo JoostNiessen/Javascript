@@ -52,31 +52,74 @@ var taskController = (function () {
      */
     let updateUI = function () {
 
-        if (taskList.tasks.length > 0) {
-            createListElement();
-        } else {
-            removeUI();
-        }
+        createListElement();
+
     }
 
     /**
      * creates full html list element for every array object
      */
     let createListElement = function () {
+        
+        // select list
         var list = document.getElementById(defaultSettings.list1);
 
+        // create html element
+        // require taskName from array
         let buttonMaker = function (taskName) {
             var button = '<li class="list-group-item rounded-5 mt-1 d-flex unstarred unchecked">' + taskName + '<button id="star" class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
             return button;
         }
+        
+        removeUI();
 
+        // for task in array, set taskName as variable
         for (let i = 0; i < taskList.tasks.length; i++) {
             var taskName = taskList.tasks[i].name;
-        }
 
         list.insertAdjacentHTML('beforeend', buttonMaker(taskName));
+            
+        }
 
     }
+
+
+    let createList = function () {
+        for (let i = 0; i < taskList.tasks.length; i++) {
+            createListElement();            
+        }
+    }
+    
+
+        /**
+     * make array of all elements that are 'checked'
+     * assigns array to new one 
+     */
+    let targetCheckedElement = function () {
+
+        let values = getArrayOfElements('unchecked');
+
+        let checked = [];
+
+        for (let i = 0; i < values.length; i++) {
+            const taskName = values[i];
+            var task = {
+                name: taskName
+            }
+            checked.push(task);
+        }
+
+        console.log(checked);
+
+
+        taskList.tasks = checked;
+
+        console.log(taskList.tasks);
+        
+
+
+    }
+
 
     /**
      * emptys the array and updates the UI
@@ -136,13 +179,11 @@ var taskController = (function () {
             if (ev.target && ev.target.nodeName == "I") {
                 ev.target.classList.toggle('starredStyle');
                 var parent = ev.target.parentNode;
-                parent.parentNode.classList.toggle('unstarred');    
-                parent.parentNode.classList.toggle('starred');  
-                
-                
-
-                prioritizeStarredTasks();       
-                
+                parent.parentNode.classList.toggle('unstarred');
+                parent.parentNode.classList.toggle('starred');
+                // priorityHandler();
+                prioritizeStarredTasks();
+                createList();
             }
         });
     }
@@ -157,43 +198,39 @@ var taskController = (function () {
                 name: taskName
             }
             newObjectArray.push(task);
-        } 
+        }
 
         return newObjectArray;
 
     }
 
-    let priorityHandler = function () {
-        removeUI();
+    // let priorityHandler = function () {
+    //     removeUI();
 
-        targetStarredTasks();
-        updateUI();
-    }
+    //     prioritizeStarredTasks();
+
+    //     updateUI();
+    // }
 
     let prioritizeStarredTasks = function () {
 
         var starred = makeNewObjectArray(getArrayOfElements('starred'));
         var unstarred = makeNewObjectArray(getArrayOfElements('unstarred'));
 
-
         emptyList();
-
 
         for (let i = 0; i < starred.length; i++) {
             const element = starred[i];
-            taskList.tasks.push(element)            
+            taskList.tasks.push(element)
         }
 
         for (let i = 0; i < unstarred.length; i++) {
             const element = unstarred[i];
-            taskList.tasks.push(element)            
+            taskList.tasks.push(element)
         }
 
-
-        
         console.log(taskList.tasks);
-        
-               
+
     }
 
 
@@ -208,30 +245,6 @@ var taskController = (function () {
     }
 
 
-    /**
-     * make array of all elements that are 'checked'
-     * assigns array to new one 
-     */
-    let targetCheckedElement = function () {
-
-        let values = getArrayOfElements('checked');
-
-        let checked = [];
-
-        for (let i = 0; i < values.length; i++) {
-            const taskName = values[i];
-            var task = {
-                name: taskName
-            }
-            checked.push(task);
-        }
-
-        console.log(checked);
-        
-
-        taskList.tasks = checked;
-
-    }
 
 
 
@@ -240,12 +253,14 @@ var taskController = (function () {
         addInputToArray: addInputToArray,
         emptyList: emptyList,
         updateUI: updateUI,
-        priorityHandler: priorityHandler,
+        // priorityHandler: priorityHandler,
         emptyInputField: emptyInputField,
         targetListelement: targetListelement,
         targetCheckedElement: targetCheckedElement,
         defaultSettings: defaultSettings,
         removeUI: removeUI,
+        createListElement: createListElement,
+        createList: createList,
         targetStarredTasks: targetStarredTasks
     }
 
@@ -263,7 +278,7 @@ var controller = (function (UIctrl) {
         UIctrl.addInputToArray(input);
 
         // 3. add to UI 
-        UIctrl.updateUI();
+        UIctrl.createListElement();
 
         // 4. empty input
         UIctrl.emptyInputField();
@@ -277,8 +292,8 @@ var controller = (function (UIctrl) {
         UIctrl.targetListelement();
 
         // 2. filter checked items
+        UIctrl.targetStarredTasks();
 
-        UIctrl.priorityHandler();
 
 
         // 3. for each index of array splice()
@@ -291,7 +306,7 @@ var controller = (function (UIctrl) {
 
         UIctrl.removeUI();
 
-        UIctrl.updateUI();
+        UIctrl.createList();
 
     }
 
@@ -299,7 +314,7 @@ var controller = (function (UIctrl) {
 
         UIctrl.emptyList();
 
-        UIctrl.updateUI();
+        UIctrl.removeUI();
     }
 
 
