@@ -230,21 +230,46 @@ var taskController = (function () {
         return values;
     }
 
+    let ctrlAddItem = function () {
+        // get input and push to array
+        addInputToArray(getInput());
+        // create list element in List
+        createListElement();
+        // empty input field
+        emptyInputField();
+    }
 
+    let targetElements = (function () {
+        // target checked elements 
+        targetListelement();
+        // target and prioritize starred tasks
+        targetStarredTasks();
+    })();
+
+
+    let removeElements = function () {
+        // get array of all checked elements
+        targetCheckedElement();
+        // empty the UI list
+        removeUI();
+        // make new list for UI
+        createList();
+        // if finishedtasks > 5, give reward
+        showFinishedTasks();
+    }
+
+    let clearList = function () {
+        //  empty out the array
+        emptyList();
+        // empty out the UI
+        removeUI();
+    }
 
     return {
-        getInput: getInput,
-        addInputToArray: addInputToArray,
-        emptyList: emptyList,
-        emptyInputField: emptyInputField,
-        targetListelement: targetListelement,
-        showFinishedTasks: showFinishedTasks,
-        targetCheckedElement: targetCheckedElement,
         defaultSettings: defaultSettings,
-        removeUI: removeUI,
-        createListElement: createListElement,
-        createList: createList,
-        targetStarredTasks: targetStarredTasks
+        ctrlAddItem: ctrlAddItem,
+        removeElements: removeElements,
+        clearList: clearList
     }
 
 })();
@@ -253,65 +278,26 @@ var taskController = (function () {
 var controller = (function (UIctrl) {
 
     var ctrlAddItem = function () {
-
-        // 1. get input
-        input = UIctrl.getInput();
-
-        // 2. add to array
-        UIctrl.addInputToArray(input);
-
-        // 3. add to UI 
-        UIctrl.createListElement();
-
-        // 4. empty input
-        UIctrl.emptyInputField();
-
-
+        UIctrl.ctrlAddItem();
     }
 
-
-    var ctrlCheckItem = (function () {
-        // 1. highlight clicked item
-        UIctrl.targetListelement();
-
-        // 2. filter checked items
-        UIctrl.targetStarredTasks();
-
-    })();
-
-
     var ctrlRemoveItem = function () {
-
-        UIctrl.targetCheckedElement();
-
-        UIctrl.removeUI();
-
-        UIctrl.createList();
-
-        UIctrl.showFinishedTasks();
-
-
+        UIctrl.removeElements();
     }
 
     var ctrlEmptyList = function () {
-
-        UIctrl.emptyList();
-
-        UIctrl.removeUI();
+        UIctrl.clearList();
     }
-
 
     var ctrlArchiveList = function () {
-
+        // code om naar firebase te schrijven.
     }
-
 
     document.getElementById(taskController.defaultSettings.addTaskButton).addEventListener('click', ctrlAddItem);
 
     document.getElementById(taskController.defaultSettings.removeTaskButton).addEventListener('click', ctrlRemoveItem);
     document.getElementById(taskController.defaultSettings.emptyListButton).addEventListener('click', ctrlEmptyList);
     document.getElementById(taskController.defaultSettings.archiveListButton).addEventListener('click', ctrlArchiveList);
-
 
 })(taskController);
 
