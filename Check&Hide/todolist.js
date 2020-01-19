@@ -1,13 +1,13 @@
-var taskController = (function () {
+var Takenlijst = (function () {
     let taskList = {
         tasks: []
     }
 
     let finishedTasks = {
         tasks: []
-    },
+    }
 
-    defaultSettings = {
+    let defaultSettings = {
         inputSelector: 'taskInput1',
         list1: 'list1',
         listItems: '.list-group-item',
@@ -17,6 +17,9 @@ var taskController = (function () {
         emptyListButton: 'emptyList',
         archiveListButton: 'archiveList'
     }
+
+    
+
 
     let setSettings = function (settings) {
         Object.assign(defaultSettings, settings);
@@ -39,7 +42,6 @@ var taskController = (function () {
         var task = {
             name: taskName
         }
-
         taskList.tasks.push(task);
 
         console.log(taskList.tasks);
@@ -92,19 +94,15 @@ var taskController = (function () {
 
         taskList.tasks = unchecked;
 
-
         finishedTasks.tasks = checked;
-
 
     }
 
     let showFinishedTasks = function () {
 
-        let rewardPanel = document.getElementById('reward-panel');
-
         let div = document.getElementById('x');
 
-        let  html = '<div id="reward-panel" class="col-md-4 justify-content-center mx-auto rounded-5 text-center reward-panel align-items-center"><i class="fas fa-crown fa-5x starredStyle p-3"></i><h2 class="reward text-light text-center py-3">Good Job!</h2></div>';
+        let html = '<div id="reward-panel" class="col-md-4 justify-content-center mx-auto rounded-5 text-center reward-panel align-items-center"><i class="fas fa-crown fa-5x starredStyle p-3"></i><h2 class="reward text-light text-center py-3">Good Job!</h2></div>';
 
         if (finishedTasks.tasks.length > 3) {
             div.insertAdjacentHTML('afterbegin', html);
@@ -115,22 +113,6 @@ var taskController = (function () {
           });
     }
 
-    
-    let makeNewObjectArray = function (classArray) {
-
-        let newObjectArray = [];
-
-        for (let i = 0; i < classArray.length; i++) {
-            const taskName = classArray[i];
-            var task = {
-                name: taskName
-            }
-            newObjectArray.push(task);
-        }
-
-        return newObjectArray;
-
-    }
 
 
     /**
@@ -199,7 +181,6 @@ var taskController = (function () {
 
 
     let prioritizeStarredTasks = function () {
-
         var starred = makeNewObjectArray(getArrayOfElements('starred'));
         var unstarred = makeNewObjectArray(getArrayOfElements('unstarred'));
 
@@ -214,10 +195,23 @@ var taskController = (function () {
             const element = unstarred[i];
             taskList.tasks.push(element)
         }
-
         console.log(taskList.tasks);
-
     }
+
+        
+    let makeNewObjectArray = function (classArray) {
+        let newObjectArray = [];
+
+        for (let i = 0; i < classArray.length; i++) {
+            const taskName = classArray[i];
+            var task = {
+                name: taskName
+            }
+            newObjectArray.push(task);
+        }
+        return newObjectArray;
+    }
+
 
 
 
@@ -226,112 +220,73 @@ var taskController = (function () {
         var values = Array.prototype.map.call(classes, function (el) {
             return el.textContent;
         });
-
         return values;
     }
 
 
-
-    return {
-        getInput: getInput,
-        addInputToArray: addInputToArray,
-        emptyList: emptyList,
-        emptyInputField: emptyInputField,
-        targetListelement: targetListelement,
-        showFinishedTasks: showFinishedTasks,
-        targetCheckedElement: targetCheckedElement,
-        defaultSettings: defaultSettings,
-        removeUI: removeUI,
-        createListElement: createListElement,
-        createList: createList,
-        targetStarredTasks: targetStarredTasks
+    
+    let ctrlAddItem = function () {
+        // get input and push to array
+        addInputToArray(getInput());
+        // create list element in List
+        createListElement();
+        // empty input field
+        emptyInputField();
     }
 
-})();
-
-
-var controller = (function (UIctrl) {
-
-    var ctrlAddItem = function () {
-
-        // 1. get input
-        input = UIctrl.getInput();
-
-        // 2. add to array
-        UIctrl.addInputToArray(input);
-
-        // 3. add to UI 
-        UIctrl.createListElement();
-
-        // 4. empty input
-        UIctrl.emptyInputField();
-
-
-    }
-
-
-    var ctrlCheckItem = (function () {
-        // 1. highlight clicked item
-        UIctrl.targetListelement();
-
-        // 2. filter checked items
-        UIctrl.targetStarredTasks();
-
+    let targetElements = (function () {
+        // target checked elements 
+        targetListelement();
+        // target and prioritize starred tasks
+        targetStarredTasks();
     })();
 
 
-    var ctrlRemoveItem = function () {
-
-        UIctrl.targetCheckedElement();
-
-        UIctrl.removeUI();
-
-        UIctrl.createList();
-
-        UIctrl.showFinishedTasks();
-
-
+    let removeElements = function () {
+        // get array of all checked elements
+        targetCheckedElement();
+        // empty the UI list
+        removeUI();
+        // make new list for UI
+        createList();
+        // if finishedtasks > 5, give reward
+        showFinishedTasks();
     }
 
-    var ctrlEmptyList = function () {
-
-        UIctrl.emptyList();
-
-        UIctrl.removeUI();
+    let clearList = function () {
+        //  empty out the array
+        emptyList();
+        // empty out the UI
+        removeUI();
     }
 
+    let test = function () {
+        console.log("loaded succesfully");
+        
+    }();
 
-    var ctrlArchiveList = function () {
-
-    }
 
 
-    document.getElementById(taskController.defaultSettings.addTaskButton).addEventListener('click', ctrlAddItem);
+    document.getElementById(defaultSettings.addTaskButton).addEventListener('click', function () {
+        ctrlAddItem();
+    });
 
-    document.getElementById(taskController.defaultSettings.removeTaskButton).addEventListener('click', ctrlRemoveItem);
-    document.getElementById(taskController.defaultSettings.emptyListButton).addEventListener('click', ctrlEmptyList);
-    document.getElementById(taskController.defaultSettings.archiveListButton).addEventListener('click', ctrlArchiveList);
+    document.getElementById(defaultSettings.removeTaskButton).addEventListener('click', function () {
+        removeElements();
+    });
+    document.getElementById(defaultSettings.emptyListButton).addEventListener('click', function () {
+        clearList();
+    });
+    document.getElementById(defaultSettings.archiveListButton).addEventListener('click', null);   
+    
 
     return {
         setSettings: setSettings
     }
+    
+});
 
-})(taskController);
 
 
 
-    //     /**
-    //  * uses task as parameter to filter array
-    //  */
-    // function checkTasks(task) {
-    //     return  ;
-    // }
 
-    // /**
-    //  * filters checked tasks
-    //  * sets taskList.tasks equal to array of unchecked tasks
-    //  */
-    // function checkFilter() {
-    //     console.log(taskList.tasks.filter(checkTasks));
-    //     taskList.tasks = taskList.tasks.filter(checkTasks);
-    // }

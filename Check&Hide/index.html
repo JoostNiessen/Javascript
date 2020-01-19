@@ -49,6 +49,8 @@
       <ul class="list-group" id="list1">
         
       </ul>
+ 
+
       <form class="fixed-bottom ">
           <div class="form-group text-center d-flex flex-row my-2 col-md-2 ">
             <input type="text" class="form-control" id="taskInput1" placeholder="I need to:">
@@ -69,14 +71,38 @@
   </div>
   </div>
 
-
-
-    
+  <ul class="list-group" id="list2">
+        
+  </ul>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.slim.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+
+
+
+  <script src="todolist.js"></script>
+
+  <script>
+
+    var lijst1 = new Takenlijst();
+
+
+    var lijst1 = new Takenlijst();
+
+    lijst1.setSettings({
+      list1: 'list1'
+    })
+
+
+
+
+    
+
+  </script>
+
+
+
 
 </body>
 
