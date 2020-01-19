@@ -73,8 +73,10 @@ I DID
 -- star element kunnen targeten op een nette manier met event delegation
     -- class toegevoegd die de stars geel maakt
     -- functie voegt ook class toe aan het listobject waar die inzit 
+-- star element kunnen prioritizen IN de array, UI werkt nog niet helemaal mee
 
 --DRY principe gebruikt om elements from array te retrieven
+-- '' om arrays weer terug te stoppen
 ik merk dat ik systematisch begin na te denken 
 
 

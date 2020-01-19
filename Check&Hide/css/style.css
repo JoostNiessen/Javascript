@@ -11,6 +11,11 @@ ul li.checked {
 
 }
 
+.reward-panel {
+    background-color: rgba(85, 85, 85, 0.75);
+    border-radius: 10px;
+}
+
 ul li.empty {
     display: none;
 }
@@ -22,7 +27,7 @@ ul li.empty {
     
 }
 
-.starred {
+.starredStyle {
     color: gold;
     /* rgba(158, 122, 43, 0.774) */
 

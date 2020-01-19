@@ -1,21 +1,22 @@
-
-
 var taskController = (function () {
     let taskList = {
         tasks: []
+    }
+
+    let finishedTasks = {
+        tasks: []
     },
-        defaultSettings = {
-            inputSelector: '#taskInput',
-            list1: 'list1',
-            listItems: '.list-group-item',
-            starButton: 'star',
-            addTaskButton: 'addBtn',
-            removeTaskButton: 'clearList',
-            emptyListButton: 'emptyList',
-            archiveListButton: 'archiveList'
 
-        }
-
+    defaultSettings = {
+        inputSelector: 'taskInput1',
+        list1: 'list1',
+        listItems: '.list-group-item',
+        starButton: 'star',
+        addTaskButton: 'addBtn',
+        removeTaskButton: 'clearList',
+        emptyListButton: 'emptyList',
+        archiveListButton: 'archiveList'
+    }
 
     let setSettings = function (settings) {
         Object.assign(defaultSettings, settings);
@@ -25,7 +26,7 @@ var taskController = (function () {
      * gets input from the DOM
      */
     let getInput = function () {
-        let input = document.querySelector(defaultSettings.inputSelector).value;
+        let input = document.getElementById(defaultSettings.inputSelector).value;
 
         return input;
     }
@@ -45,22 +46,11 @@ var taskController = (function () {
 
     }
 
-
-    /**
-     * IF: creates elements of the array object
-     * ELSE: selects list and removes all elements inside
-     */
-    let updateUI = function () {
-
-        createListElement();
-
-    }
-
     /**
      * creates full html list element for every array object
      */
     let createListElement = function () {
-        
+
         // select list
         var list = document.getElementById(defaultSettings.list1);
 
@@ -70,15 +60,15 @@ var taskController = (function () {
             var button = '<li class="list-group-item rounded-5 mt-1 d-flex unstarred unchecked">' + taskName + '<button id="star" class="btn btn-star d-flex ml-auto pt-1"><i class="far fa-star"></i></button></li>'
             return button;
         }
-        
+
         removeUI();
 
         // for task in array, set taskName as variable
         for (let i = 0; i < taskList.tasks.length; i++) {
             var taskName = taskList.tasks[i].name;
 
-        list.insertAdjacentHTML('beforeend', buttonMaker(taskName));
-            
+            list.insertAdjacentHTML('beforeend', buttonMaker(taskName));
+
         }
 
     }
@@ -86,55 +76,74 @@ var taskController = (function () {
 
     let createList = function () {
         for (let i = 0; i < taskList.tasks.length; i++) {
-            createListElement();            
+            createListElement();
         }
     }
-    
 
-        /**
-     * make array of all elements that are 'checked'
-     * assigns array to new one 
-     */
+
+    /**
+ * make array of all elements that are 'checked'
+ * assigns array to new one 
+ */
     let targetCheckedElement = function () {
 
-        let values = getArrayOfElements('unchecked');
+        let unchecked = makeNewObjectArray(getArrayOfElements('unchecked'));
+        let checked = makeNewObjectArray(getArrayOfElements('checked'));
 
-        let checked = [];
+        taskList.tasks = unchecked;
 
-        for (let i = 0; i < values.length; i++) {
-            const taskName = values[i];
+
+        finishedTasks.tasks = checked;
+
+
+    }
+
+    let showFinishedTasks = function () {
+
+        let rewardPanel = document.getElementById('reward-panel');
+
+        let div = document.getElementById('x');
+
+        let  html = '<div id="reward-panel" class="col-md-4 justify-content-center mx-auto rounded-5 text-center reward-panel align-items-center"><i class="fas fa-crown fa-5x starredStyle p-3"></i><h2 class="reward text-light text-center py-3">Good Job!</h2></div>';
+
+        if (finishedTasks.tasks.length > 3) {
+            div.insertAdjacentHTML('afterbegin', html);
+        }
+        
+        $("#reward-panel").click(function(){
+            $("#reward-panel").hide();            
+          });
+    }
+
+    
+    let makeNewObjectArray = function (classArray) {
+
+        let newObjectArray = [];
+
+        for (let i = 0; i < classArray.length; i++) {
+            const taskName = classArray[i];
             var task = {
                 name: taskName
             }
-            checked.push(task);
+            newObjectArray.push(task);
         }
 
-        console.log(checked);
-
-
-        taskList.tasks = checked;
-
-        console.log(taskList.tasks);
-        
-
+        return newObjectArray;
 
     }
 
 
     /**
-     * emptys the array and updates the UI
+     * emptys the array 
      */
     let emptyList = function () {
-
         taskList.tasks = [];
-
     }
 
     /**
      * Remove all elements of List1
      */
     let removeUI = function () {
-
         var ul = document.getElementById(defaultSettings.list1);
         var items = ul.getElementsByTagName("LI");
 
@@ -149,7 +158,7 @@ var taskController = (function () {
      * emptys out the input field
      */
     let emptyInputField = function () {
-        document.querySelector(defaultSettings.inputSelector).value = '';
+        document.getElementById(defaultSettings.inputSelector).value = '';
     }
 
     /**
@@ -188,29 +197,6 @@ var taskController = (function () {
         });
     }
 
-    let makeNewObjectArray = function (classArray) {
-
-        let newObjectArray = [];
-
-        for (let i = 0; i < classArray.length; i++) {
-            const taskName = classArray[i];
-            var task = {
-                name: taskName
-            }
-            newObjectArray.push(task);
-        }
-
-        return newObjectArray;
-
-    }
-
-    // let priorityHandler = function () {
-    //     removeUI();
-
-    //     prioritizeStarredTasks();
-
-    //     updateUI();
-    // }
 
     let prioritizeStarredTasks = function () {
 
@@ -246,16 +232,13 @@ var taskController = (function () {
 
 
 
-
-
     return {
         getInput: getInput,
         addInputToArray: addInputToArray,
         emptyList: emptyList,
-        updateUI: updateUI,
-        // priorityHandler: priorityHandler,
         emptyInputField: emptyInputField,
         targetListelement: targetListelement,
+        showFinishedTasks: showFinishedTasks,
         targetCheckedElement: targetCheckedElement,
         defaultSettings: defaultSettings,
         removeUI: removeUI,
@@ -294,9 +277,6 @@ var controller = (function (UIctrl) {
         // 2. filter checked items
         UIctrl.targetStarredTasks();
 
-
-
-        // 3. for each index of array splice()
     })();
 
 
@@ -307,6 +287,9 @@ var controller = (function (UIctrl) {
         UIctrl.removeUI();
 
         UIctrl.createList();
+
+        UIctrl.showFinishedTasks();
+
 
     }
 
@@ -328,13 +311,6 @@ var controller = (function (UIctrl) {
     document.getElementById(taskController.defaultSettings.removeTaskButton).addEventListener('click', ctrlRemoveItem);
     document.getElementById(taskController.defaultSettings.emptyListButton).addEventListener('click', ctrlEmptyList);
     document.getElementById(taskController.defaultSettings.archiveListButton).addEventListener('click', ctrlArchiveList);
-
-
-    // document.addEventListener('keypress', function (event) {
-    //     if (event.keyCode === 13 || event.which === 13) {
-    //         ctrlAddItem();
-    //     }
-    // });
 
 
 })(taskController);
